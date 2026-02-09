@@ -1,0 +1,49 @@
+{
+  "name": "prisma-python-generator",
+  "version": "0.1.0",
+  "description": "Prisma generator that produces Python Pydantic model classes from your Prisma schema",
+  "license": "MIT",
+  "author": {
+    "name": "Lexmata LLC",
+    "email": "jquinn@lexmata.ai"
+  },
+  "main": "dist/index.js",
+  "bin": {
+    "prisma-python-generator": "dist/bin.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "generate": "pnpm build && prisma generate",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "pnpm build"
+  },
+  "keywords": [
+    "prisma",
+    "generator",
+    "python",
+    "pydantic",
+    "codegen"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lexmata/prisma-python-generator"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@prisma/generator-helper": "^6.0.0"
+  },
+  "devDependencies": {
+    "@prisma/client": "^6.0.0",
+    "@types/node": "^25.2.2",
+    "prisma": "^6.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}
