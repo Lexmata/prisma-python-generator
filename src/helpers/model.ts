@@ -85,8 +85,10 @@ function generateField(
       enumsUsed.push(field.type);
     }
   } else if (field.kind === 'object') {
-    // Relation field — use string forward reference
-    pyType = `"${field.type}"`;
+    // Relation field — bare name; `from __future__ import annotations`
+    // already stringifies all annotations, so inner quotes are not needed
+    // and would cause Pydantic to evaluate them as string literals.
+    pyType = field.type;
     if (!relationModels.includes(field.type)) {
       relationModels.push(field.type);
     }

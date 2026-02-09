@@ -84,6 +84,15 @@ export async function generate(options: GeneratorOptions): Promise<void> {
   initLines.push(`]`);
   initLines.push('');
 
+  // Rebuild all models to resolve cross-module forward references
+  if (models.length > 0) {
+    initLines.push('# Resolve cross-module forward references');
+    for (const model of models) {
+      initLines.push(`${model.name}.model_rebuild()`);
+    }
+    initLines.push('');
+  }
+
   fs.writeFileSync(path.join(outputDir, '__init__.py'), initLines.join('\n'));
 
   // --- Generate py.typed marker for PEP 561 ---

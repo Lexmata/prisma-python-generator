@@ -85,7 +85,7 @@ describe('generateModel', () => {
 
     const result = generateModel(model, new Set());
     expect(result).toContain('class Post(BaseModel):');
-    expect(result).toContain('author: "User"');
+    expect(result).toContain('author: User');
     expect(result).toContain('author_id: int');
   });
 
@@ -103,7 +103,7 @@ describe('generateModel', () => {
     };
 
     const result = generateModel(model, new Set());
-    expect(result).toContain('posts: list["Post"]');
+    expect(result).toContain('posts: list[Post]');
   });
 
   it('handles camelCase to snake_case field aliasing', () => {
