@@ -1,6 +1,6 @@
 {
   "name": "@lexmata/prisma-python-generator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Prisma generator that produces Python Pydantic model classes from your Prisma schema",
   "license": "MIT",
   "author": {
