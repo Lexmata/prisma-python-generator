@@ -34,7 +34,7 @@
     "url": "https://github.com/Lexmata/prisma-python-generator"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=24"
   },
   "dependencies": {
     "@prisma/generator-helper": "^6.0.0"
