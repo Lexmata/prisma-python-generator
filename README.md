@@ -2,6 +2,25 @@
 
 A [Prisma](https://www.prisma.io/) generator plugin that produces Python [Pydantic v2](https://docs.pydantic.dev/) model classes from your Prisma schema.
 
+## Status
+
+**Active** -- used in production by Lexmata Python services. Published to npm as `@lexmata/prisma-python-generator`.
+
+## Tech Stack
+
+- **Language:** TypeScript (compiled to CommonJS)
+- **Runtime:** Node.js >= 18
+- **Framework:** Prisma Generator Helper (`@prisma/generator-helper` v6)
+- **Testing:** Vitest
+- **Build:** `tsc`
+
+## Prerequisites
+
+- Node.js >= 18
+- pnpm (recommended) or npm
+- Prisma >= 6.0.0 in your project
+- Python >= 3.10 with Pydantic v2 installed in the consuming project
+
 ## Installation
 
 ```bash
@@ -144,6 +163,65 @@ pnpm test
 # Generate from the example schema
 GENERATE_PYTHON=true pnpm generate
 ```
+
+## Testing
+
+```bash
+# Run all tests once
+pnpm test
+
+# Run in watch mode during development
+pnpm test:watch
+```
+
+Tests are in `src/__tests__/` and cover:
+
+| Test file | Coverage |
+|---|---|
+| `type-map.test.ts` | Prisma-to-Python type mapping, import block generation |
+| `model.test.ts` | Pydantic model generation, field defaults, optional/list handling, aliases |
+| `enum.test.ts` | Python `str` enum generation |
+| `utils.test.ts` | Snake case conversion, file naming |
+
+## Publishing
+
+Publishing is manual via `pnpm publish`. The `prepublishOnly` script runs `pnpm build` automatically before each publish.
+
+```bash
+# Bump version in package.json, then:
+pnpm publish --access public
+```
+
+There is no CI/CD pipeline for this repo; publishing is done from a developer machine with npm credentials.
+
+## Project Structure
+
+```
+prisma-python-generator/
+├── src/
+│   ├── index.ts              # Public API re-exports
+│   ├── bin.ts                # CLI entry point for Prisma
+│   ├── generator.ts          # Main generator (isEnabled check, file I/O)
+│   ├── utils.ts              # snake_case conversion, file headers
+│   ├── helpers/
+│   │   ├── type-map.ts       # Prisma → Python type mapping, import tracking
+│   │   ├── model.ts          # Pydantic model class generation
+│   │   └── enum.ts           # Python str enum generation
+│   └── __tests__/            # Vitest tests (one per helper)
+├── prisma/
+│   └── schema.prisma         # Example schema for local testing
+├── package.json
+├── tsconfig.json
+└── vitest.config.ts
+```
+
+## Related Repos
+
+| Repo | Relationship |
+|---|---|
+| `lexmata-models` | Prisma schema source -- the canonical data model this generator reads |
+| `lexmata-summarizer` | Python consumer -- imports the generated Pydantic models |
+| `lexmata-demand-letter` | Python consumer -- imports the generated Pydantic models |
 
 ## License
 
